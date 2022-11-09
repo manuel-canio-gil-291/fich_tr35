@@ -329,8 +329,8 @@ public class Main {
         System.out.println("******************************");
         System.out.println("* Programa datos persona 1.0 *");
         System.out.println("******************************\n");
-        System.out.println("Seleccione una opcion:");
         do{
+            System.out.println("Seleccione una opcion:");
             System.out.println("\t1.- Guardar datos de la persona\n\t2.- Leer datos y guardar en tipo primitivo"+
                 "\n\t3.- Leer datos de tipo primitivo y guardar en un objeto\n\t4.- Buscar datos de la persona\n\t5.- Salir\n");
             System.out.print("Tu opcion: ");
