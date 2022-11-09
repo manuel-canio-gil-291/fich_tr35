@@ -1,11 +1,16 @@
 package es.mcg.ejerciciooculto;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -321,6 +326,292 @@ public class Main {
         }
     }
 
+    public static void guardarLista(Scanner sc)
+    {
+        int op;
+        System.out.println("Elige si desea guardar una lista de datos de persona normal o persona universitaria");
+        System.out.println("\t1.- Persona normal\n\t2.- Persona universitaria\n");
+        System.out.print("Tu opcion: ");
+        op = sc.nextInt();
+        if(op == 1) guardarListaPersona();
+        else if(op == 2) guardarListaUniversidad();
+        else System.out.println("Opcion no valida");
+    }
+
+    public static void guardarListaPersona() 
+    {
+        File file = null;
+        File file2 = null;
+        FileInputStream fileInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        DataInputStream dataInputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        Persona persona = null;
+        List<Persona> personas = null;
+        try 
+        {
+            file = new File("DatosPrimitivosPersona.dat");
+            file2 = new File("ListaDatosPersona.obj");
+            fileInputStream = new FileInputStream(file);
+            dataInputStream = new DataInputStream(fileInputStream);
+            fileOutputStream = new FileOutputStream(file2);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            personas = new ArrayList<Persona>();
+            String nombre, linea;
+            int codigo, edad;
+            while(fileInputStream.read() != -1)
+            {
+                codigo = dataInputStream.readInt();
+                nombre = dataInputStream.readUTF();
+                edad = dataInputStream.readInt();
+                linea = dataInputStream.readUTF();
+                if(linea.equals("---------"))
+                {
+                    persona = new Persona(codigo, nombre, edad);
+                    personas.add(persona);
+                }
+            }
+            objectOutputStream.writeObject(personas);
+        } 
+        catch (IOException ioException) 
+        {
+            ioException.printStackTrace();
+        }
+        finally
+        {
+            if(objectOutputStream != null)
+            {
+                try 
+                {
+                    objectOutputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(fileOutputStream != null)
+            {
+                try 
+                {
+                    fileOutputStream.close();
+                }
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(dataInputStream != null)
+            {
+                try 
+                {
+                    dataInputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(fileInputStream != null)
+            {
+                try 
+                {
+                    fileInputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void guardarListaUniversidad() 
+    {
+        File file = null;
+        File file2 = null;
+        FileInputStream fileInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        DataInputStream dataInputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        PersonaUniversidad personaUniversidad = null;
+        List<PersonaUniversidad> personasUniversidad = null;
+        try 
+        {
+            file = new File("DatosPrimitivosUniversidad.dat");
+            file2 = new File("ListaDatosUniversidad.obj");
+            fileInputStream = new FileInputStream(file);
+            dataInputStream = new DataInputStream(fileInputStream);
+            fileOutputStream = new FileOutputStream(file2);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            personasUniversidad = new ArrayList<PersonaUniversidad>();
+            String nombre, correo, linea;
+            int codigo, edad, universidadId;
+            while(fileInputStream.read() != -1)
+            {
+                codigo = dataInputStream.readInt();
+                nombre = dataInputStream.readUTF();
+                edad = dataInputStream.readInt();
+                universidadId = dataInputStream.readInt();
+                correo = dataInputStream.readUTF();
+                linea = dataInputStream.readUTF();
+                if(linea.equals("---------"))
+                {
+                    personaUniversidad = new PersonaUniversidad(codigo, nombre, edad, universidadId, correo);
+                    personasUniversidad.add(personaUniversidad);
+                }
+            }
+            objectOutputStream.writeObject(personasUniversidad);
+        } 
+        catch (IOException ioException) 
+        {
+            ioException.printStackTrace();
+        }
+        finally
+        {
+            if(objectOutputStream != null)
+            {
+                try 
+                {
+                    objectOutputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(fileOutputStream != null)
+            {
+                try 
+                {
+                    fileOutputStream.close();
+                }
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(dataInputStream != null)
+            {
+                try 
+                {
+                    dataInputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(fileInputStream != null)
+            {
+                try 
+                {
+                    fileInputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static class Persona 
+    {
+        private int codigo, edad;
+        private String nombre;
+
+        
+        public Persona(int codigo, String nombre, int edad) 
+        {
+            this.codigo = codigo;
+            this.edad = edad;
+            this.nombre = nombre;
+        }
+
+
+        public int getCodigo() 
+        {
+            return codigo;
+        }
+
+
+        public void setCodigo(int codigo) 
+        {
+            this.codigo = codigo;
+        }
+
+
+        public int getEdad() 
+        {
+            return edad;
+        }
+
+
+        public void setEdad(int edad) 
+        {
+            this.edad = edad;
+        }
+
+
+        public String getNombre() 
+        {
+            return nombre;
+        }
+
+
+        public void setNombre(String nombre) 
+        {
+            this.nombre = nombre;
+        }
+
+
+        @Override
+        public String toString() 
+        {
+            return "Persona [codigo=" + codigo + ", edad=" + edad + ", nombre=" + nombre + "]";
+        }
+    }
+
+    public static class PersonaUniversidad extends Persona 
+    {
+        private int universidadId;
+        private String correo;
+
+        public PersonaUniversidad(int codigo, String nombre, int edad, int universidadId, String correo) 
+        {
+            super(codigo, nombre, edad);
+            this.universidadId = universidadId;
+            this.correo = correo;
+        }
+
+        public int getUniversidadId() 
+        {
+            return universidadId;
+        }
+
+        public void setUniversidadId(int universidadId) 
+        {
+            this.universidadId = universidadId;
+        }
+
+        public String getCorreo() 
+        {
+            return correo;
+        }
+
+        public void setCorreo(String correo) 
+        {
+            this.correo = correo;
+        }
+
+        @Override
+        public String toString() 
+        {
+            return "PersonaUniversidad [universidadId=" + universidadId + ", correo=" + correo + "]";
+        }
+    }
+
     public static void main(String[] args) 
     {
         Scanner sc = new Scanner(System.in);
@@ -339,7 +630,7 @@ public class Main {
             switch (op) {
                 case 1: introducirDatos(sc); break;
                 case 2: guardarDatosPrimitivos(sc); break;
-                case 3: break;
+                case 3: guardarLista(sc); break;
                 case 4: break;
                 case 5: System.out.println("Ha finalizado el programa"); sc.close(); salir = true; break;
                 default: System.out.println("Opcion no valida");
