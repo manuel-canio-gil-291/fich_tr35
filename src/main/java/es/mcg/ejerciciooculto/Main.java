@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -352,6 +353,10 @@ public class Main {
         {
             file = new File("DatosPrimitivosPersona.dat");
             file2 = new File("ListaDatosPersona.obj");
+            if(!file2.exists())
+            {
+                file2.createNewFile();
+            }
             fileInputStream = new FileInputStream(file);
             dataInputStream = new DataInputStream(fileInputStream);
             fileOutputStream = new FileOutputStream(file2);
@@ -440,6 +445,10 @@ public class Main {
         {
             file = new File("DatosPrimitivosUniversidad.dat");
             file2 = new File("ListaDatosUniversidad.obj");
+            if(!file2.exists())
+            {
+                file2.createNewFile();
+            }
             fileInputStream = new FileInputStream(file);
             dataInputStream = new DataInputStream(fileInputStream);
             fileOutputStream = new FileOutputStream(file2);
@@ -513,6 +522,41 @@ public class Main {
                     ioException.printStackTrace();
                 }
             }
+        }
+    }
+
+    public static void buscarDatos(Scanner sc)
+    {
+        File file = null;
+        File file2 = null;
+        List<Persona> personas = null;
+        List<PersonaUniversidad> personasUniversidad = null;
+        FileInputStream fileInputStream = null, fileInputStream2 = null;
+        ObjectInputStream objectInputStream = null, objectInputStream2 = null;
+        try 
+        {
+            file = new File("ListaDatosPersona.obj");
+            file2 = new File("ListaDatosUniversidad.obj");
+            fileInputStream = new FileInputStream(file);
+            fileInputStream2 = new FileInputStream(file2);
+            objectInputStream = new ObjectInputStream(objectInputStream2);
+            personas = (List<Persona>) objectInputStream.readObject();
+            personasUniversidad = (List<PersonaUniversidad>) objectInputStream2.readObject();
+            int codigo, edad, universidadId;
+            String nombre, correo;
+            int op;
+            boolean salir = false;
+            do
+            {
+                System.out.println("Digame que campo desea buscar:");
+                System.out.println("\t1.- Codigo\n\t2.- Nombre\n\t3.- Edad\n\t4.- Universidad ID\n\t5.- Correo");
+                System.out.print("Tu opcion: ");
+                op = sc.nextInt();
+            }while(!salir);
+        } 
+        catch (Exception e) 
+        {
+            // TODO: handle exception
         }
     }
 
@@ -631,7 +675,7 @@ public class Main {
                 case 1: introducirDatos(sc); break;
                 case 2: guardarDatosPrimitivos(sc); break;
                 case 3: guardarLista(sc); break;
-                case 4: break;
+                case 4: buscarDatos(sc); break;
                 case 5: System.out.println("Ha finalizado el programa"); sc.close(); salir = true; break;
                 default: System.out.println("Opcion no valida");
             }
