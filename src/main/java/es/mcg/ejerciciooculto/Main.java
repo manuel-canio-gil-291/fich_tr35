@@ -539,24 +539,211 @@ public class Main {
             file2 = new File("ListaDatosUniversidad.obj");
             fileInputStream = new FileInputStream(file);
             fileInputStream2 = new FileInputStream(file2);
-            objectInputStream = new ObjectInputStream(objectInputStream2);
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            objectInputStream2 = new ObjectInputStream(fileInputStream2);
             personas = (List<Persona>) objectInputStream.readObject();
             personasUniversidad = (List<PersonaUniversidad>) objectInputStream2.readObject();
             int codigo, edad, universidadId;
             String nombre, correo;
             int op;
-            boolean salir = false;
+            boolean salir = false, encontrado = false;
             do
             {
                 System.out.println("Digame que campo desea buscar:");
-                System.out.println("\t1.- Codigo\n\t2.- Nombre\n\t3.- Edad\n\t4.- Universidad ID\n\t5.- Correo");
+                System.out.println("\t1.- Codigo\n\t2.- Nombre\n\t3.- Edad\n\t4.- Universidad ID\n\t5.- Correo\n\t6.- Salir\n");
                 System.out.print("Tu opcion: ");
                 op = sc.nextInt();
+                switch (op) {
+                    case 1: 
+                    {
+                        System.out.print("Introduce el codigo que desea buscar: ");
+                        codigo = sc.nextInt();
+                        for(int i = 0; i < personas.size(); i++)
+                        {
+                            if(personas.get(i).getCodigo() == codigo)
+                            {
+                                encontrado = true;
+                                System.out.println("Codigo encontrado");
+                                System.out.println(personas.get(i));
+                            }
+                        }
+                        for(int j = 0; j < personasUniversidad.size(); j++)
+                        {
+                            if(personasUniversidad.get(j).getCodigo() == codigo)
+                            {
+                                encontrado = true;
+                                System.out.println("Codigo encontrado");
+                                System.out.println(personasUniversidad.get(j));
+                            }
+                        }
+                        if(!encontrado)
+                        {
+                            System.err.println("ERROR. El codigo "+codigo+" no se ha encontrado");
+                        }
+                        encontrado = false;
+                    }
+                    break;
+                    case 2:
+                    {
+                        System.out.print("Escriba el nombre que desea buscar: ");
+                        nombre = sc.nextLine();
+                        for(int i = 0; i < personas.size(); i++)
+                        {
+                            if(personas.get(i).getNombre().equals(nombre))
+                            {
+                                encontrado = true;
+                                System.out.println("Nombre encontrado");
+                                System.out.println(personas.get(i));
+                            }
+                        }
+                        for(int j = 0; j < personasUniversidad.size(); j++)
+                        {
+                            if(personasUniversidad.get(j).getNombre().equals(nombre))
+                            {
+                                encontrado = true;
+                                System.out.println("Nombre encontrado");
+                                System.out.println(personasUniversidad.get(j));
+                            }
+                        }
+                        if(!encontrado)
+                        {
+                            System.err.println("ERROR. El nombre "+nombre+" no se ha encontrado");
+                        }
+                        encontrado = false;
+                    }
+                    break;
+                    case 3:
+                    {
+                        System.out.print("Introduce la edad que desea buscar: ");
+                        edad = sc.nextInt();
+                        for(int i = 0; i < personas.size(); i++)
+                        {
+                            if(personas.get(i).getEdad() == edad)
+                            {
+                                encontrado = true;
+                                System.out.println("Edad encontrada");
+                                System.out.println(personas.get(i));
+                            }
+                        }
+                        for(int j = 0; j < personasUniversidad.size(); j++)
+                        {
+                            if(personasUniversidad.get(j).getEdad() == edad)
+                            {
+                                encontrado = true;
+                                System.out.println("Edad encontrada");
+                                System.out.println(personasUniversidad.get(j));
+                            }
+                        }
+                        if(!encontrado)
+                        {
+                            System.err.println("ERROR. Edad "+edad+" no encontrada");
+                        }
+                        encontrado = false;
+                    }
+                    break;
+                    case 4:
+                    {
+                        System.out.print("Indica el ID de la universidad que desea buscar: ");
+                        universidadId = sc.nextInt();
+                        for(int j = 0; j < personasUniversidad.size(); j++)
+                        {
+                            if(personasUniversidad.get(j).getUniversidadId() == universidadId)
+                            {
+                                encontrado = true;
+                                System.out.println("ID universidad encontrada");
+                                System.out.println(personasUniversidad.get(j));
+                            }
+                        }
+                        if(!encontrado)
+                        {
+                            System.err.println("ERROR. Universidad ID "+universidadId+" no encontrada");
+                        }
+                        encontrado = false;
+                    }
+                    break;
+                    case 5:
+                    {
+                        System.out.print("Indica el correo que desea buscar (formato: alguien@example.com): ");
+                        correo = sc.nextLine();
+                        {
+                            for(int j = 0; j < personasUniversidad.size(); j++)
+                            {
+                                encontrado = true;
+                                System.out.println("Correo encontrado");
+                                System.out.println(personasUniversidad.get(j));
+                            }
+                        }
+                        if(!encontrado)
+                        {
+                            System.err.println("ERROR. No se ha encontrado el correo "+correo);
+                        }
+                        encontrado = false;
+                    }
+                    break;
+                    case 6:
+                    {
+                        System.out.println("Volviendo al menu principal");
+                        salir = true;
+                    }
+                    break;
+                    default: System.err.println("ERROR. Opcion no valida");
+                }
             }while(!salir);
         } 
-        catch (Exception e) 
+        catch (IOException ioException) 
         {
-            // TODO: handle exception
+            ioException.printStackTrace();
+        }
+        catch (ClassNotFoundException notFoundException)
+        {
+            notFoundException.printStackTrace();
+        }
+        finally
+        {
+            if(objectInputStream2 != null)
+            {
+                try 
+                {
+                    objectInputStream2.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(objectInputStream != null)
+            {
+                try 
+                {
+                    objectInputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(fileInputStream2 != null)
+            {
+                try 
+                {
+                    fileInputStream2.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
+            if(fileInputStream != null)
+            {
+                try 
+                {
+                    fileInputStream.close();    
+                } 
+                catch (IOException ioException) 
+                {
+                    ioException.printStackTrace();
+                }
+            }
         }
     }
 
@@ -613,7 +800,7 @@ public class Main {
         @Override
         public String toString() 
         {
-            return "Persona [codigo=" + codigo + ", edad=" + edad + ", nombre=" + nombre + "]";
+            return "Codigo: " + codigo + "\nNombre: " + nombre + "\nEdad:" + edad + "";
         }
     }
 
@@ -652,7 +839,7 @@ public class Main {
         @Override
         public String toString() 
         {
-            return "PersonaUniversidad [universidadId=" + universidadId + ", correo=" + correo + "]";
+            return "Codigo: "+getCodigo()+"\nNombre: "+getNombre()+"\nEdad: "+getEdad()+"\nUniversidadId: " + universidadId + "\nCorreo: " + correo + "";
         }
     }
 
