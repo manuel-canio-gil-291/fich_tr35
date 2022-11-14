@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,9 +27,12 @@ public class Main {
         System.out.println("\t1.- Persona normal\n\t2.- Persona universitaria\n");
         System.out.print("Tu opcion: ");
         op = sc.nextInt();
-        if(op == 1) introducirDatos(sc);
-        else if(op == 2) introducirDatosUniversidad(sc);
-        else System.out.println("Opcion no valida");
+        switch(op)
+        {
+            case 1: introducirDatosPersona(sc); break;
+            case 2: introducirDatosUniversidad(sc); break;
+            default: System.out.println("Opcion no valida");
+        }
     }
 
     public static void introducirDatosPersona(Scanner sc)
@@ -49,6 +53,7 @@ public class Main {
                 System.out.print("Codigo de la persona: ");
                 codigo = sc.nextInt();
                 System.out.print("Nombre de la persona: ");
+                sc.nextLine();
                 nombre = sc.nextLine();
                 System.out.print("Edad de la persona: ");
                 edad = sc.nextInt();
@@ -57,6 +62,7 @@ public class Main {
                 printWriter.println(edad);
                 printWriter.println("---------");
                 System.out.print("Guardar mas datos? (s/n) ");
+                sc.nextLine();
                 c = sc.nextLine().charAt(0);
                 if(c == 's')
                 {
@@ -114,10 +120,12 @@ public class Main {
                 System.out.print("Codigo de la persona: ");
                 codigo = sc.nextInt();
                 System.out.print("Nombre de la persona: ");
+                sc.nextLine();
                 nombre = sc.nextLine();
                 System.out.print("Edad de la persona: ");
                 edad = sc.nextInt();
                 System.out.print("Correo de la persona: ");
+                sc.nextLine();
                 correo = sc.nextLine();
                 universidadId = (int)Math.floor(Math.random()*10000);
                 matcher = pattern.matcher(correo);
@@ -178,9 +186,12 @@ public class Main {
         System.out.println("\t1.- Persona normal\n\t2.- Persona universitaria\n");
         System.out.print("Tu opcion: ");
         op = sc.nextInt();
-        if(op == 1) guardarDatosPrimitivosPersona();
-        else if(op == 2) guardarDatosPrimitivosUniversidad();
-        else System.out.println("Opcion no valida");
+        switch(op)
+        {
+            case 1: guardarDatosPrimitivosPersona(); break;
+            case 2: guardarDatosPrimitivosUniversidad(); break;
+            default: System.out.println("Opcion no valida");
+        }
     }
 
     public static void guardarDatosPrimitivosPersona()
@@ -206,8 +217,10 @@ public class Main {
             while(scan.hasNextLine())
             {
                 codigo = scan.nextInt();
+                scan.nextLine();
                 nombre = scan.nextLine();
                 edad = scan.nextInt();
+                scan.nextLine();
                 linea = scan.nextLine();
                 if(linea.equals("---------"))
                 {
@@ -276,9 +289,11 @@ public class Main {
             while(scan.hasNextLine())
             {
                 codigo = scan.nextInt();
+                scan.nextLine();
                 nombre = scan.nextLine();
                 edad = scan.nextInt();
                 universidadId = scan.nextInt();
+                scan.nextLine();
                 correo = scan.nextLine();
                 linea = scan.nextLine();
                 if(linea.equals("---------"))
@@ -334,9 +349,12 @@ public class Main {
         System.out.println("\t1.- Persona normal\n\t2.- Persona universitaria\n");
         System.out.print("Tu opcion: ");
         op = sc.nextInt();
-        if(op == 1) guardarListaPersona();
-        else if(op == 2) guardarListaUniversidad();
-        else System.out.println("Opcion no valida");
+        switch(op)
+        {
+            case 1: guardarListaPersona(); break;
+            case 2: guardarListaUniversidad(); break;
+            default: System.out.println("Opcion no valida");
+        }
     }
 
     public static void guardarListaPersona() 
@@ -364,8 +382,6 @@ public class Main {
             personas = new ArrayList<Persona>();
             String nombre, linea;
             int codigo, edad;
-            while(fileInputStream.read() != -1)
-            {
                 codigo = dataInputStream.readInt();
                 nombre = dataInputStream.readUTF();
                 edad = dataInputStream.readInt();
@@ -375,7 +391,6 @@ public class Main {
                     persona = new Persona(codigo, nombre, edad);
                     personas.add(persona);
                 }
-            }
             objectOutputStream.writeObject(personas);
         } 
         catch (IOException ioException) 
@@ -456,8 +471,6 @@ public class Main {
             personasUniversidad = new ArrayList<PersonaUniversidad>();
             String nombre, correo, linea;
             int codigo, edad, universidadId;
-            while(fileInputStream.read() != -1)
-            {
                 codigo = dataInputStream.readInt();
                 nombre = dataInputStream.readUTF();
                 edad = dataInputStream.readInt();
@@ -469,7 +482,6 @@ public class Main {
                     personaUniversidad = new PersonaUniversidad(codigo, nombre, edad, universidadId, correo);
                     personasUniversidad.add(personaUniversidad);
                 }
-            }
             objectOutputStream.writeObject(personasUniversidad);
         } 
         catch (IOException ioException) 
@@ -586,6 +598,7 @@ public class Main {
                     case 2:
                     {
                         System.out.print("Escriba el nombre que desea buscar: ");
+                        sc.nextLine();
                         nombre = sc.nextLine();
                         for(int i = 0; i < personas.size(); i++)
                         {
@@ -664,6 +677,7 @@ public class Main {
                     case 5:
                     {
                         System.out.print("Indica el correo que desea buscar (formato: alguien@example.com): ");
+                        sc.nextLine();
                         correo = sc.nextLine();
                         {
                             for(int j = 0; j < personasUniversidad.size(); j++)
@@ -747,7 +761,7 @@ public class Main {
         }
     }
 
-    public static class Persona 
+    public static class Persona implements Serializable
     {
         private int codigo, edad;
         private String nombre;
