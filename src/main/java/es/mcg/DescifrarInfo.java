@@ -2,7 +2,13 @@ package es.mcg;
 
 import java.io.File;
 import java.util.Scanner;
-
+/**
+ * Esta clase descifra el enunciado del ejercicio oculto
+ * 
+ * @author Manuel Canio Gil
+ * @version 1.0
+ * @since 2022-11-14
+ */
 public class DescifrarInfo {
     public static void main(String[] args) {
         File file = null;
