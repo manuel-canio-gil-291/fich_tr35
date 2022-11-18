@@ -18,7 +18,48 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import es.mcg.utils.Utils;
-
+/**
+ * <p>Ejercicio oculto de fichero de datos, ficheros primitivos y ficheros serializables.</p>
+ * <p>Los datos contienen los siguientes campos: int, String, int, int, String.</p>
+ * <p>De todos estos campos pertenecen a dos objetos: {@code Persona} y {@code PersonaUniversidad}.
+ * La superclase es {@code Persona} mientras que {@code PersonaUniversidad} hereda de esa clase.</p>
+ * <p>En este ejercicio se pide introducir los datos de la persona o del universitario por la 
+ * pantalla, cumpliendo las siguientes fases:
+ * <ul>
+ *  <li>Introducir datos por pantalla y guardar como datos de texto en un fichero, se debe usar el metodo {@code PrintWriter}.</li>
+ *  <li>Después leer los datos de texto, dependiendo si son datos de persona o universitario y guardar en datos primitivos, 
+ * se debe usar los siguientes metodos: {@code Scanner}, {@code FileOutputStream()} y {@code DataOutputStream()}.</li>
+ *  <li>Después los datos primitivos y convertirlos en una lista de objetos, para esta fase, se debe usar las clases <code>Persona</code>
+ * y <code>PersonaUniversidad</code> y los metodos {@code FileInputStream()}, {@code DataInputStream()}, {@code FileOutputStream()}
+ * y {@code ObjectOutputStream()}. Se debe usar la clase interfaz <code>Serializable</code> en las dos clases.
+ * El ejemplo se encuentra debajo.</li>
+ *  <li>Por ultimo, se lee los datos de objetos con los metodos {@code FileInputStream()} y {@code ObjectInputStream}.
+ * Se debe de buscar el dato por la pantalla, y debe de hacer la misma coincidencia con el dato introducido, sino
+ * no lo encontrara.</li>
+ * </ul>
+ * </p>
+ * <p>Un ejemplo de la <code>Serializable</code> seria asi:
+ * <blockquote><pre>{@code
+ *      public class ObjetoPersona implements Serializable
+ *      {
+ *          private int campo1;
+ *          private int campo2;
+ *          public ObjetoPersona(campo1,campo2)
+ *          {
+ *              this.campo1 = campo1;
+ *              this.campo2 = campo2;
+ *          }
+ *          ...
+ *      }
+ * }</pre></blockquote>
+ * </p>
+ * <p>Todo este codigo estara en una unica clase {@code Main}, y {@code Persona} y {@code PersonaUniversidad} seran
+ * las subclases de esta clase.</p>
+ *
+ * @author Manuel Canio Gil
+ * @version 2.0
+ * @since 2022-11-14
+ */
 public class Main {
     public static void introducirDatos(Scanner sc) 
     {
