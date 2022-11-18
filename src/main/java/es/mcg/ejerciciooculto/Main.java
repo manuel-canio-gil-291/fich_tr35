@@ -33,7 +33,7 @@ import es.mcg.utils.Utils;
  * y <code>PersonaUniversidad</code> y los metodos {@code FileInputStream()}, {@code DataInputStream()}, {@code FileOutputStream()}
  * y {@code ObjectOutputStream()}. Se debe usar la clase interfaz <code>Serializable</code> en las dos clases.
  * El ejemplo se encuentra debajo.</li>
- *  <li>Por ultimo, se lee los datos de objetos con los metodos {@code FileInputStream()} y {@code ObjectInputStream}.
+ *  <li>Por ultimo, se lee los datos de objetos con los metodos {@code FileInputStream()} y {@code ObjectInputStream()}.
  * Se debe de buscar el dato por la pantalla, y debe de hacer la misma coincidencia con el dato introducido, sino
  * no lo encontrara.</li>
  * </ul>
